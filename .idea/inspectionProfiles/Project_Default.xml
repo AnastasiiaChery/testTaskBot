@@ -1,0 +1,45 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="237" name="Python" />
+      </Languages>
+    </inspection_tool>
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyNoneFunctionAssignmentInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPep8Inspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPep8NamingInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N803" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnboundLocalVariableInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="pandas.io.sql" />
+          <option value="ccxt.binance.binance.fetchDepositAddress" />
+          <option value="ccxt.binance.binance.fapiPrivateGetUserTrades" />
+          <option value="ccxt.binance.binance.fapiPrivatePostOrder" />
+          <option value="cryptowrapper.BitMEX.order_POST" />
+          <option value="requests.models.Response.__await__" />
+          <option value="Protocol.psl.ExchangeAPI.api_key_GET" />
+          <option value="Protocol.psl.ExchangeAPI.order_POST" />
+          <option value="Protocol.psl.ExchangeAPI.user_wallet_GET" />
+          <option value="exchange.crypto.binance.Binance.order_POST" />
+          <option value="exchange.crypto.binance.CryptoExchangeAPI.order_POST" />
+          <option value="exchange.crypto.binance.CryptoExchangeAPI.create_order_POST" />
+          <option value="exchange.crypto.interface.CryptoExchangeAPI.create_order_POST" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
+      <option name="processCode" value="true" />
+      <option name="processLiterals" value="true" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
+  </profile>
+</component>
