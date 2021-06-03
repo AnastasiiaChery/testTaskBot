@@ -1,12 +1,13 @@
 import csv
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
 with open('./data/referrals.csv') as f:
     referrals = csv.DictReader(f)
-    referrals_list=[]
+    referrals_list = []
     for row in referrals:
         referrals_list.append(row)
-
-
 
 with open('./data/trades.csv') as f:
     trades = csv.DictReader(f)
@@ -20,63 +21,106 @@ with open('./data/users.csv') as f:
     for row in users:
         users_list.append(row)
 
-list_user_report = []
-users_report={}
-general_report={}
 
-# Profit and Loss for each user
-def user_report(user):
+
+def check_statistic():
+    list_user_report = []
+    users_report = {}
+    general_report = {}
+    company_profit_report = {}
+
+    company_profit_report = {}
     for items in trades_list:
-        user=items['telegram_id']
+        user = items['telegram_id']
         list_user_report.append(user)
     for user in set(list_user_report):
         sum = 0
         for items in trades_list:
-            if items['telegram_id']==str(user):
-                sum=sum+float(items['realizedPnl'])
-        users_report[str(user)]=round(sum, 2)
-        # print(f'{str(user)} : {round(sum, 2)} ')
-    print(f'Total profit {users_report}')
+            if items['telegram_id'] == str(user):
+                sum = sum + float(items['realizedPnl'])
+        users_report[str(user)] = round(sum, 2)
 
-user_report(101151807)
-
-company_profit_report={}
-# Company profit
-def company_profit(user):
     for items in users_report:
         for it in users_list:
             if it['telegram_id'] == str(items):
-                company_profit_report[str(items)]=round(float(users_report[str(items)])*float(it['commission_percent'])/100, 2)
-                general_report[str(items)] = round(float(users_report[str(items)]) * (100-float(it['commission_percent'])) / 100, 2)
+                if users_report[str(items)]>0:
+                    company_profit_report[str(items)] = round(float(users_report[str(items)]) * float(it['commission_percent']) / 100, 2)
+                general_report[str(items)] = round(float(users_report[str(items)]) * (100 - float(it['commission_percent'])) / 100, 2)
 
-    print(f'Company profit {company_profit_report}')
-    print(f'User profit {general_report}')
-    # print(company_profit_report[str(user)])
-
-company_profit(101151807)
-
-
-# with open(r'./data/referrals.csv', 'a') as f:
-#     writer = csv.writer(f)
-#     writer.writerow('***')
-
-
-ref_list=[]
-def add_refer():
     for items in referrals_list:
         items['referral_bonus'] = float(0)
         for it in company_profit_report:
-            if items['telegram_id']==str(it):
-                items['referral_bonus']=float(company_profit_report[str(it)])*0.05
-                print(items)
-
-    with open('./data/referrals_bonus.csv', "w", newline='') as csv_file:
-        writer = csv.writer(csv_file, delimiter=',')
-        writer.writerow(referrals_list[1].keys())
-
-        for line in referrals_list:
+            if items['telegram_id'] == str(it):
+                items['referral_bonus'] = float(company_profit_report[str(it)]) * 0.05
 
 
-            writer.writerow(line.values())
 
-add_refer()
+
+
+# ------------Таблица зароботок по пользователям
+
+    from tabulate import tabulate
+
+    tb_trades = pd.DataFrame(trades_list)
+    pdtabulate = lambda tb_trades: tabulate(tb_trades, headers='keys', tablefmt='psql')
+    print(pdtabulate(tb_trades))
+
+    tb_user_list = pd.DataFrame(users_list)
+    pdtabulate = lambda tb_user_list: tabulate(tb_user_list, headers='keys', tablefmt='psql')
+    print(pdtabulate(tb_user_list))
+
+
+
+    
+
+# ------------Гистограма зароботок по пользователям
+    user_id = list(users_report.values())
+    sum = list(users_report.keys())
+
+    plt.style.use('ggplot')
+    plt.title('Общий заработок по пользователям ')
+    plt.xlabel('(dollar) $')
+    plt.ylabel('user')
+
+    plt.barh(sum, user_id)
+    plt.show()
+# ------------Гистограма зароботок компании
+    user_id_comis=list(company_profit_report .keys())
+    money_comis = list(company_profit_report .values())
+
+    plt.title('Общий зароботок компании по пользователям ')
+    plt.xlabel('(dollar) $')
+    plt.ylabel('user')
+
+    plt.barh(user_id_comis, money_comis)
+    plt.show()
+# ------------Чистый заработок юзеров
+    user_id_sal=list(general_report.keys())
+    money_sal = list(general_report.values())
+
+    plt.title('Чистый заработок пользователей')
+    plt.xlabel('(dollar) $')
+    plt.ylabel('user')
+
+    plt.barh(user_id_sal, money_sal)
+    plt.show()
+
+# ------------Реферальные бонусы
+    from_user = []
+
+    ref_bonus=[]
+    for item in referrals_list:
+        from_user.append(item['from_telegram_id'])
+
+    for item in referrals_list:
+        ref_bonus.append(item['referral_bonus'])
+
+    plt.title('Реферальные бонусы')
+    plt.xlabel('(dollar) $')
+    plt.ylabel('user')
+
+    plt.barh(from_user, ref_bonus)
+    plt.show()
+
+check_statistic()
+

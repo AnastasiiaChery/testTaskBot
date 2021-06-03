@@ -35,3 +35,8 @@ But the main criterion is the information *content* that you present and visuali
 
 ### Good luck!
 
+
+### ****************************************************
+The bot.py file contains all the code for the bot. The commented out code at the bottom of the bot with a button.
+In main.py - charts and tables. Graphs (matplotlib).
+
