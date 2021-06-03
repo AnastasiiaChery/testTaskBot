@@ -12,7 +12,8 @@ users_report = {}
 general_report = {}
 company_profit_report = {}
 
-# ------------------Открываем файлы и записываем в масив
+
+# ------------------Открываем файлы и записываем данные в масив
 
 with open('./data/referrals.csv') as f:
     referrals = csv.DictReader(f)
