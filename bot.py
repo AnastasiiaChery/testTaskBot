@@ -3,7 +3,7 @@ import csv
 import telebot
 from telebot import types
 
-bot = telebot.TeleBot('1786456671:AAGIyhGUFqTEuFsAac9RBqlrw42dCkgfsTE')
+bot = telebot.TeleBot('1578481362:AAGq61UVSjdhyhiMNhl7I0r38Q8akjZomxk')
 
 chatId = 389484326
 
